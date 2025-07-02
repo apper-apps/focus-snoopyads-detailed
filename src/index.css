@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'react-toastify/dist/ReactToastify.css';
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1E293B;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #64748B;
+}
+
+/* Toast container overrides */
+.Toastify__toast-container {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+}
+
+.Toastify__toast {
+  border-radius: 8px;
+  min-height: 64px;
+  padding: 16px;
+  background: #334155;
+  color: #F1F5F9;
+  border: 1px solid #475569;
+}
+
+.Toastify__toast--success {
+  border-color: #10B981;
+}
+
+.Toastify__toast--error {
+  border-color: #EF4444;
+}
+
+.Toastify__toast--warning {
+  border-color: #F59E0B;
+}
+
+.Toastify__progress-bar {
+  background: #7C3AED;
+}
+
+/* Shimmer effect for loading states */
+.shimmer {
+  background: linear-gradient(90deg, #334155 25%, #475569 50%, #334155 75%);
+  background-size: 200px 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+/* Glow effects for interactive elements */
+.glow-on-hover:hover {
+  box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
+  transition: box-shadow 0.2s ease-out;
+}
+
+.focus-glow:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.5);
+}
+
+/* New ad highlight animation */
+.new-ad-glow {
+  animation: pulse-glow 2s infinite;
+  border: 1px solid #7C3AED;
+}
+
+/* Platform badge styles */
+.platform-facebook {
+  background: linear-gradient(135deg, #1877F2, #42A5F5);
+}
+
+.platform-google {
+  background: linear-gradient(135deg, #4285F4, #34A853);
+}
+
+.platform-linkedin {
+  background: linear-gradient(135deg, #0077B5, #00A0DC);
+}
+
+/* Gradient text effects */
+.gradient-text {
+  background: linear-gradient(135deg, #7C3AED, #10B981);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Custom button styles */
+.btn-primary {
+  background: linear-gradient(135deg, #7C3AED, #8B5CF6);
+  border: 1px solid #7C3AED;
+  transition: all 0.2s ease-out;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #6D28D9, #7C3AED);
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+  transform: scale(1.02);
+}
+
+/* Activity pulse indicator */
+.activity-pulse {
+  position: relative;
+}
+
+.activity-pulse::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #7C3AED, #10B981);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0.6;
+  animation: pulse 2s infinite;
+}
