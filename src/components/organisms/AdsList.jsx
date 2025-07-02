@@ -1,10 +1,10 @@
 import React from "react";
-import AdCard from "@/components/molecules/AdCard";
-import Loading from "@/components/ui/Loading";
-import Empty from "@/components/ui/Empty";
 import ApperIcon from "@/components/ApperIcon";
-import Badge from "@/components/ui/Badge";
-import Button from "@/components/ui/Button";
+import Badge from "@/components/atoms/Badge";
+import Button from "@/components/atoms/Button";
+import AdCard from "@/components/molecules/AdCard";
+import Empty from "@/components/ui/Empty";
+import Loading from "@/components/ui/Loading";
 const AdsList = ({ 
   ads, 
   loading, 
