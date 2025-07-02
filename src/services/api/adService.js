@@ -1,11 +1,18 @@
 import { generateMockAds } from '@/services/mockData/adsData'
-import { getCompetitors } from '@/services/api/competitorService'
+import { getCompetitors, setAdCacheInvalidator } from '@/services/api/competitorService'
 
 // Simulate API delay
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
 let cachedAds = null
 
+// Function to invalidate cache
+export const invalidateCache = () => {
+  cachedAds = null
+}
+
+// Set up cache invalidation for competitor changes
+setAdCacheInvalidator(invalidateCache)
 export const getAds = async () => {
   await delay(400)
   

@@ -1,7 +1,15 @@
 export const generateMockAds = async () => {
   const platforms = ['Facebook', 'Google', 'LinkedIn']
-  const competitorIds = [1, 2, 3, 4, 5, 6, 7]
   
+  // Import getCompetitors dynamically to avoid circular dependency
+  const { getCompetitors } = await import('@/services/api/competitorService')
+  const competitors = await getCompetitors()
+  const competitorIds = competitors.map(c => c.Id)
+  
+  // Ensure we have at least some competitor IDs for ad generation
+  if (competitorIds.length === 0) {
+    return []
+  }
   const headlines = [
     "Transform Your Business with AI-Powered Solutions",
     "Boost Productivity by 300% - See How",

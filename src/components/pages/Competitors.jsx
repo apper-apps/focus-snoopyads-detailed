@@ -10,8 +10,8 @@ import Card from '@/components/atoms/Card'
 import Loading from '@/components/ui/Loading'
 import Error from '@/components/ui/Error'
 import { getCompetitors, createCompetitor, updateCompetitor, deleteCompetitor } from '@/services/api/competitorService'
+import { invalidateCache as invalidateAdCache } from '@/services/api/adService'
 import { toast } from 'react-toastify'
-
 const Competitors = () => {
   const navigate = useNavigate()
   const [competitors, setCompetitors] = useState([])
@@ -97,9 +97,12 @@ const Competitors = () => {
   const handleDeleteCompetitor = async (competitor) => {
     if (window.confirm(`Are you sure you want to remove ${competitor.name} from your competitors list?`)) {
       try {
-        await deleteCompetitor(competitor.Id)
+await deleteCompetitor(competitor.Id)
         setCompetitors(competitors.filter(c => c.Id !== competitor.Id))
         toast.success(`${competitor.name} removed from competitors`)
+        // Invalidate ad cache to remove ads for deleted competitor
+        invalidateAdCache()
+        toast.info('Refreshing ads library...')
       } catch (err) {
         toast.error('Failed to remove competitor')
       }
@@ -134,10 +137,13 @@ const Competitors = () => {
         const updated = await updateCompetitor(editingCompetitor.Id, competitorData)
         setCompetitors(competitors.map(c => c.Id === editingCompetitor.Id ? updated : c))
         toast.success(`${formData.name} updated successfully`)
-      } else {
+} else {
         const newCompetitor = await createCompetitor(competitorData)
         setCompetitors([...competitors, newCompetitor])
         toast.success(`${formData.name} added to competitors`)
+        // Invalidate ad cache to ensure ads are generated for new competitor
+        invalidateAdCache()
+        toast.info('Refreshing ads library with new competitor data...')
       }
 
       setShowAddForm(false)

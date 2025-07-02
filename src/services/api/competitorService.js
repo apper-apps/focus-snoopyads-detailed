@@ -3,6 +3,11 @@ import { generateMockCompetitors } from '@/services/mockData/competitorsData'
 // Simulate API delay
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
+// Import for cache invalidation
+let invalidateAdCache = null
+export const setAdCacheInvalidator = (invalidator) => {
+  invalidateAdCache = invalidator
+}
 let cachedCompetitors = null
 
 export const getCompetitors = async () => {
@@ -39,9 +44,14 @@ export const createCompetitor = async (competitorData) => {
     Id: maxId + 1,
     ...competitorData,
     addedDate: new Date().toISOString()
-  }
+}
   
   cachedCompetitors.push(newCompetitor)
+  
+  // Invalidate ad cache to regenerate ads with new competitor
+  if (invalidateAdCache) {
+    invalidateAdCache()
+  }
   
   return { ...newCompetitor }
 }
@@ -60,9 +70,14 @@ export const updateCompetitor = async (id, updates) => {
     ...competitors[index],
     ...updates,
     Id: parseInt(id) // Ensure Id remains integer
-  }
+}
   
   cachedCompetitors[index] = updatedCompetitor
+  
+  // Invalidate ad cache to refresh ads with updated competitor info
+  if (invalidateAdCache) {
+    invalidateAdCache()
+  }
   
   return { ...updatedCompetitor }
 }
@@ -76,8 +91,12 @@ export const deleteCompetitor = async (id) => {
   if (index === -1) {
     throw new Error('Competitor not found')
   }
+cachedCompetitors.splice(index, 1)
   
-  cachedCompetitors.splice(index, 1)
+  // Invalidate ad cache to remove ads for deleted competitor
+  if (invalidateAdCache) {
+    invalidateAdCache()
+  }
   
   return { success: true }
 }
